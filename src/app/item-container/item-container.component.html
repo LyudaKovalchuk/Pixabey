@@ -1,0 +1,19 @@
+<div class="hits-container">
+  <div *ngFor="let item of hits; let i = index" class="item">
+    <a (click)="closeItem(i)" class="close">X</a>
+    <div class="content-container">
+      <img alt="robot" src={{item.previewURL}}>
+      <div class="paragraph-container">
+        <p>{{item.tags}}</p>
+        <a href="{{item.pageURL}}"><img alt="link" src="src/assets/icons/link.svg" class="icons"></a>
+        <p><img alt="like" src="src/assets/icons/like.svg" class="icons">{{item.likes}}</p>
+      </div>
+    </div>
+    <div class="button-container">
+      <a class="btn like" id="like{{i}}" (click)="approve($event,i,item)">Approve</a>
+      <a *ngIf="!item.favorite" class="btn favorite" (click)="addToFavorite(item, index)"></a>
+      <a *ngIf="item.favorite" class="btn cancelFavorite" (click)="removeFromFavorite(item, index)"></a>
+      <a class="btn dislike" id="dislike{{i}}" (click)="dislike($event,i,item)">Dislike</a>
+  </div>
+  </div>
+</div>
