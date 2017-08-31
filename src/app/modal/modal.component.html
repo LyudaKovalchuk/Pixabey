@@ -1,0 +1,11 @@
+<div [@dialog] *ngIf="visible" class="dialog" >
+  <h1>Favorires</h1>
+  <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
+  <div class="favorite-container">
+    <div  *ngFor=" let item of values; let i = index" class="item">
+      <img alt="robot" src={{item.previewURL}}>
+      <a class="close" (click)="closeItem(item,i)">x</a>
+    </div>
+  </div>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>

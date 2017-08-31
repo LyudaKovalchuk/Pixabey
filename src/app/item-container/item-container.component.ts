@@ -1,6 +1,6 @@
-import { Component, OnInit,  AfterViewInit} from '@angular/core';
-import { HttpService } from 'app/services/http.service'
-import { Observable } from 'rxjs/Observable';
+import {Component, OnInit, Input, OnChanges, SimpleChange} from '@angular/core';
+import { HttpService } from 'app/services/http.service';
+import { FavoriteService } from 'app/services/favorite.service'
 import 'rxjs/Rx';
 
 @Component({
@@ -8,12 +8,12 @@ import 'rxjs/Rx';
   templateUrl: './item-container.component.html',
   styleUrls: ['./item-container.component.scss']
 })
-export class ItemContainerComponent implements OnInit {
-
+export class ItemContainerComponent implements OnInit,OnChanges {
+  @Input() newHits;
   hits : any;
 
 
-  constructor( private api: HttpService) { }
+  constructor( private api: HttpService, private fav: FavoriteService) { }
 
   ngOnInit() {
     this.api.getData()
@@ -41,7 +41,15 @@ export class ItemContainerComponent implements OnInit {
     })
     this.hits = newHits;
   }
-  addToFavorite(item,index) {
-    localStorage.setItem(item.id, JSON.stringify(item));
+  addToFavorite(item) {
+    this.fav.save(item);
+  }
+  removeFromFavorite(item, index){
+    this.fav.delete(item,index);
+  }
+  ngOnChanges(changes: any) {
+    console.log(changes);
+    this.hits = changes.newHits.currentValue.hits;
+
   }
 }

@@ -1,4 +1,9 @@
-<h1>
-  {{title}}
-</h1>
-<app-item-container></app-item-container>
+<app-modal [(visible)]="showDialog" >
+</app-modal>
+<app-header (loadData)="loadNewData($event)" >
+  <div class="button-container">
+    <a (click)="showDialog = !showDialog" class="button yellow"></a>
+  </div>
+</app-header>
+<app-item-container [newHits]="newHits" (change)="ChangeFunc()">
+</app-item-container>
