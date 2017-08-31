@@ -8,25 +8,29 @@ export class FavoriteService {
   favorites: Observable<any> = this._favorites.asObservable();
 
   constructor() {
-    const favorites = JSON.parse(localStorage.getItem("favorites"));
+    const favorites = JSON.parse(localStorage.getItem("favorite"));
     this._favorites.next(favorites);
   }
-
   save(item) {
-    if (localStorage.getItem("favorite")) {
-      let temp = JSON.parse(localStorage.getItem("favorite"));
-      temp.push(item)
-      localStorage.setItem("favorite", JSON.stringify(temp));
-    }
-    else localStorage.setItem("favorite", JSON.stringify([item]));
+    let favorites = this.getFavorites();
+    favorites.push(item);
+    this.updateFavorites(favorites);
   }
 
-  delete(item, index) {
-    let temp = JSON.parse(localStorage.getItem("favorite"));
-    let newTemp = temp.filter( (item, ind) => {
-      if (ind != index) return item;
-    })
-    localStorage.setItem("favorite", JSON.stringify(newTemp));
+  delete(item) {
+    let favorites = this.getFavorites();
+    favorites = favorites.filter((element) => element.id != item.id);
+    this.updateFavorites(favorites);
+  }
+
+  getFavorites() {
+    let favorites = localStorage.getItem("favorite");
+    return favorites ? JSON.parse(favorites) : [];
+  }
+
+  updateFavorites(favorites) {
+    localStorage.setItem("favorite", JSON.stringify(favorites));
+    this._favorites.next(favorites);
   }
 
 }

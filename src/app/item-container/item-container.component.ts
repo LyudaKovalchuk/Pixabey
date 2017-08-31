@@ -44,8 +44,8 @@ export class ItemContainerComponent implements OnInit,OnChanges {
   addToFavorite(item) {
     this.fav.save(item);
   }
-  removeFromFavorite(item, index){
-    this.fav.delete(item,index);
+  removeFromFavorite(item){
+    this.fav.delete(item);
   }
   ngOnChanges(changes: any) {
     console.log(changes);

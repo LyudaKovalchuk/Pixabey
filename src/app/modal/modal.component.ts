@@ -25,22 +25,22 @@ export class ModalComponent implements OnInit {
   @Input() visible: boolean;
 
   values : Array<any> = [];
-  keysAmount: number;
-  keys: any;
 
+  constructor( private fav:FavoriteService) {
 
-  constructor( private fav:FavoriteService) { }
+  }
 
   ngOnInit() {
-  this.values = JSON.parse(localStorage.getItem("favorite"));
-
+    this.fav.favorites.subscribe( (favorites) => {
+      this.values = favorites;
+    })
   }
   closeItem(item,index){
     let newValues = this.values.filter( (item, ind) => {
       if ( item != this.values[index] ) return item;
     })
     this.values = newValues;
-    this.fav.delete(item,index);
+    this.fav.delete(item);
   }
   close() {
     this.visible = false;
