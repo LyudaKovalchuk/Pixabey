@@ -2,14 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpService } from 'app/services/http.service';
-import { FavoriteService } from 'app/services/favorite.service';
-
-import { AppComponent } from './app.component';
-import { ItemContainerComponent } from './item-container/item-container.component';
-import { ModalComponent } from './modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './header/header.component';
+
+import { HttpService } from './services/http/http.service';
+import { FavoriteService } from './services/favorite/favorite.service';
+
+import { AppComponent } from './components/app/app.component';
+import { ItemContainerComponent } from './components/item-container/item-container.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [

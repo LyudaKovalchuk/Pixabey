@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
-import { HttpService } from 'app/services/http.service'
+import { HttpService } from '../../services/http/http.service'
 
 @Component({
   selector: 'app-header',

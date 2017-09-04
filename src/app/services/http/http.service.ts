@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Http,  RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
+import {Observable} from "rxjs/Rx";
 
 @Injectable()
 export class HttpService {
@@ -21,7 +21,7 @@ export class HttpService {
   }
   moreData(str){
     return this.http.get("https://pixabay.com/api/?key="+this.API_KEY+"&q="+encodeURIComponent(str))
-        .map((res) => res.json());
+      .map((res) => res.json());
   }
 
 }

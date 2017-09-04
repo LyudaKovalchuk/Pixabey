@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter, animate} from '@angular/core';
 import { trigger, transition, style} from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FavoriteService } from 'app/services/favorite.service'
+import { FavoriteService } from '../../services/favorite/favorite.service'
 
 
 @Component({
@@ -26,9 +26,7 @@ export class ModalComponent implements OnInit {
 
   values : Array<any> = [];
 
-  constructor( private fav:FavoriteService) {
-
-  }
+  constructor( private fav:FavoriteService) {}
 
   ngOnInit() {
     this.fav.favorites.subscribe( (favorites) => {
@@ -41,9 +39,9 @@ export class ModalComponent implements OnInit {
     })
     this.values = newValues;
     this.fav.delete(item);
+    item.favorite = false;
   }
   close() {
     this.visible = false;
-    console.log(this.values)
   }
 }

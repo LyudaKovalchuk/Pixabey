@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, OnChanges, SimpleChange} from '@angular/core';
-import { HttpService } from 'app/services/http.service';
-import { FavoriteService } from 'app/services/favorite.service'
+import { HttpService } from '../../services/http/http.service';
+import { FavoriteService } from '../../services/favorite/favorite.service'
 import 'rxjs/Rx';
 
 @Component({
@@ -11,6 +11,7 @@ import 'rxjs/Rx';
 export class ItemContainerComponent implements OnInit,OnChanges {
   @Input() newHits;
   hits : any;
+  favorites: any;
 
 
   constructor( private api: HttpService, private fav: FavoriteService) { }
@@ -19,6 +20,15 @@ export class ItemContainerComponent implements OnInit,OnChanges {
     this.api.getData()
     .subscribe( (response)=> {
       this.hits = response.hits;
+      this.fav.favorites.subscribe( (favorites) => {
+        this.favorites = favorites;
+      })
+       this.hits.map( (item)=> {
+        this.favorites.forEach( (fav) => {
+          if (item.id == fav.id)
+            item.favorite = true
+        })
+      })
      })
   }
 
@@ -37,15 +47,18 @@ export class ItemContainerComponent implements OnInit,OnChanges {
   }
   closeItem(index) {
     let newHits = this.hits.filter( (item, ind) => {
-      if ( item != this.hits[index] ) return item;
+      if ( item != this.hits[index] )
+        return item;
     })
     this.hits = newHits;
   }
   addToFavorite(item) {
     this.fav.save(item);
+    item.favorite = true;
   }
   removeFromFavorite(item){
     this.fav.delete(item);
+    item.favorite = false;
   }
   ngOnChanges(changes: any) {
     console.log(changes);

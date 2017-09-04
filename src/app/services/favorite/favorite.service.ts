@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
+import {Subject, Observable, BehaviorSubject} from 'rxjs/Rx';
 
 @Injectable()
 export class FavoriteService {
 
-  private _favorites: Subject<any> = new Subject<any>();
+  private _favorites: Subject<any> = new BehaviorSubject<any>([]);
   favorites: Observable<any> = this._favorites.asObservable();
 
   constructor() {
@@ -20,6 +20,7 @@ export class FavoriteService {
   delete(item) {
     let favorites = this.getFavorites();
     favorites = favorites.filter((element) => element.id != item.id);
+    item.favorite = false;
     this.updateFavorites(favorites);
   }
 
